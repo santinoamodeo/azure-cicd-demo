@@ -18,9 +18,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar dependencias
+      - name: Crear antenv e instalar dependencias
         run: |
-          python -m pip install --upgrade pip
+          python -m venv antenv
+          source antenv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Subir artefacto
