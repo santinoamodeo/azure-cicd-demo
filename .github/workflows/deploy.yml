@@ -24,7 +24,6 @@ jobs:
           source antenv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
-          echo "APP_VERSION=${{ github.sha }}" > .env_version
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
@@ -43,6 +42,13 @@ jobs:
         with:
           name: app
 
+      - name: Setear version en DEV
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'app-cicd-demo-santinoaa-dev'
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE_DEV }}
+          app-settings-json: '[{"name": "APP_VERSION", "value": "${{ github.sha }}"}]'
+
       - name: Deploy a DEV
         uses: azure/webapps-deploy@v3
         with:
@@ -60,6 +66,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app
+
+      - name: Setear version en PROD
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'app-cicd-demo-santinoaa'
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          app-settings-json: '[{"name": "APP_VERSION", "value": "${{ github.sha }}"}]'
 
       - name: Deploy a PROD
         uses: azure/webapps-deploy@v3
