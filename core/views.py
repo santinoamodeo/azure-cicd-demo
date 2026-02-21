@@ -1,4 +1,6 @@
+import os
 from django.http import JsonResponse
 
 def health(request):
-    return JsonResponse({"status": "ok", "env": "production"})
+    env = os.environ.get("APP_ENV", "dev")
+    return JsonResponse({"status": "ok", "env": env, "version": "1.0"})
