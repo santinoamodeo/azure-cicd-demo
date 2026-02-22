@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,3 +87,14 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import logging
+from opencensus.ext.azure.log_exporter import AzureLogHandler
+
+APPLICATIONINSIGHTS_CONNECTION_STRING = os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING", "")
+
+if APPLICATIONINSIGHTS_CONNECTION_STRING:
+    logger = logging.getLogger(__name__)
+    logger.addHandler(AzureLogHandler(
+        connection_string=APPLICATIONINSIGHTS_CONNECTION_STRING
+    ))
