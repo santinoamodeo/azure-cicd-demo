@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'opencensus.ext.django.middleware.OpencensusMiddleware',
+    'applicationinsights.django.ApplicationInsightsMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,10 +96,10 @@ APPLICATIONINSIGHTS_CONNECTION_STRING = os.environ.get("APPLICATIONINSIGHTS_CONN
 
 if APPLICATIONINSIGHTS_CONNECTION_STRING:
     try:
-        from opencensus.ext.azure.trace_exporter import AzureExporter
-        from opencensus.ext.django.config import settings as oc_settings
-        oc_settings.AZURE_EXPORTER = {
-            'CONNECTION_STRING': APPLICATIONINSIGHTS_CONNECTION_STRING,
+        from applicationinsights.django import ApplicationInsightsMiddleware
+        APPLICATION_INSIGHTS = {
+            'ikey': APPLICATIONINSIGHTS_CONNECTION_STRING,
+            'use_operation_id': True,
         }
     except ImportError:
         pass

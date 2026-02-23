@@ -1,4 +1,5 @@
 django
 gunicorn
+applicationinsights
 opencensus-ext-azure
 opencensus-ext-django
