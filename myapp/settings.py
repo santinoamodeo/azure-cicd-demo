@@ -28,7 +28,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'applicationinsights.django.ApplicationInsightsMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -91,15 +90,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Application Insights
-APPLICATIONINSIGHTS_CONNECTION_STRING = os.environ.get("APPLICATIONINSIGHTS_CONNECTION_STRING", "")
-
-if APPLICATIONINSIGHTS_CONNECTION_STRING:
-    try:
-        from applicationinsights.django import ApplicationInsightsMiddleware
-        APPLICATION_INSIGHTS = {
-            'ikey': APPLICATIONINSIGHTS_CONNECTION_STRING,
-            'use_operation_id': True,
-        }
-    except ImportError:
-        pass
