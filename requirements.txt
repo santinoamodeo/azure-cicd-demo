@@ -1,3 +1,4 @@
 django
 gunicorn
 opencensus-ext-azure
+opencensus-ext-django
